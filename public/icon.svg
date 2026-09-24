@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle with safe margin -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="url(#accent)" stroke-width="6" opacity="0.4" />
+
+  <!-- Outer Ring / Glow -->
+  <circle cx="256" cy="240" r="150" fill="#6366f1" opacity="0.12" filter="url(#glow)" />
+
+  <!-- Open Book Symbol -->
+  <path d="M256 310 C210 270 140 270 96 280 L96 160 C140 150 210 150 256 190 C302 150 372 150 416 160 L416 280 C372 270 302 270 256 310 Z" fill="url(#accent)" filter="url(#glow)" />
+  <path d="M256 190 L256 310" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.7" />
+
+  <!-- Modern AI Compass / Diamond Star -->
+  <path d="M256 100 L268 136 L304 148 L268 160 L256 196 L244 160 L208 148 L244 136 Z" fill="url(#gold)" filter="url(#glow)" />
+
+  <!-- Audio Wave / Speaking Arc (representing 4 skills: Speaking, Reading, Writing, Listening) -->
+  <path d="M180 345 Q256 385 332 345" fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" />
+  <circle cx="160" cy="340" r="8" fill="#38bdf8" />
+  <circle cx="352" cy="340" r="8" fill="#a855f7" />
+
+  <!-- Bottom Badge Label: SMARTTRACK -->
+  <rect x="136" y="405" width="240" height="44" rx="22" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+  <text x="256" y="433" fill="#38bdf8" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="900" letter-spacing="4" text-anchor="middle">SMARTTRACK</text>
+</svg>

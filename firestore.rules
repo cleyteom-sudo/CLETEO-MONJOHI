@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128;
+    }
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connectivity verification document
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Synchronized user logins across phones and laptops
+    match /users/{userId} {
+      allow read: if isValidId(userId);
+      allow create, update: if isValidId(userId)
+        && request.resource.data.email is string
+        && request.resource.data.role in ['teacher', 'student', 'admin'];
+      allow delete: if false;
+    }
+
+    // Synchronized student records, TP proficiency, stars, XP
+    match /students/{studentId} {
+      allow read: if isValidId(studentId);
+      allow create, update: if isValidId(studentId)
+        && request.resource.data.name is string
+        && request.resource.data.year is number;
+      allow delete: if false;
+    }
+
+    // School classes
+    match /classes/{classId} {
+      allow read: if isValidId(classId);
+      allow create, update: if isValidId(classId)
+        && request.resource.data.name is string;
+      allow delete: if false;
+    }
+
+    // Student completed tasks and diagnostic history
+    match /task_history/{taskId} {
+      allow read: if isValidId(taskId);
+      allow create, update: if isValidId(taskId)
+        && request.resource.data.skill is string
+        && request.resource.data.taskTitle is string;
+      allow delete: if false;
+    }
+
+    // Audit and activity logs
+    match /activity_logs/{logId} {
+      allow read: if isValidId(logId);
+      allow create: if isValidId(logId)
+        && request.resource.data.title is string;
+      allow update, delete: if false;
+    }
+  }
+}

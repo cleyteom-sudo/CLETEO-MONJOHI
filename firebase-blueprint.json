@@ -1,0 +1,125 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile and session login state across devices",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "name": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["teacher", "student", "admin"] },
+        "school": { "type": "string", "maxLength": 256 },
+        "className": { "type": "string", "maxLength": 64 },
+        "year": { "type": "number" },
+        "lastDevice": { "type": "string", "maxLength": 128 },
+        "lastLoginAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "student": {
+      "title": "Student",
+      "description": "Student PBD learning record and progress data",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "year": { "type": "number" },
+        "className": { "type": "string", "maxLength": 64 },
+        "avatarUrl": { "type": "string", "maxLength": 512 },
+        "readingTP": { "type": "string", "maxLength": 16 },
+        "writingTP": { "type": "string", "maxLength": 16 },
+        "listeningTP": { "type": "string", "maxLength": 16 },
+        "speakingTP": { "type": "string", "maxLength": 16 },
+        "overallTP": { "type": "string", "maxLength": 16 },
+        "readingValidated": { "type": "boolean" },
+        "writingValidated": { "type": "boolean" },
+        "listeningValidated": { "type": "boolean" },
+        "speakingValidated": { "type": "boolean" },
+        "xp": { "type": "number" },
+        "level": { "type": "number" },
+        "streakDays": { "type": "number" },
+        "stars": { "type": "number" },
+        "isFirstTimerCompleted": { "type": "boolean" },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "email", "year", "className"]
+    },
+    "classGroup": {
+      "title": "ClassGroup",
+      "description": "Primary school class grouping",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 64 },
+        "year": { "type": "number" },
+        "studentCount": { "type": "number" },
+        "academicYear": { "type": "string", "maxLength": 32 },
+        "classAverageTP": { "type": "string", "maxLength": 16 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "year", "academicYear"]
+    },
+    "taskHistory": {
+      "title": "TaskHistory",
+      "description": "Completed student task and activity across reading, speaking, writing, and listening",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 128 },
+        "skill": { "type": "string", "maxLength": 32 },
+        "category": { "type": "string", "maxLength": 128 },
+        "taskTitle": { "type": "string", "maxLength": 256 },
+        "score": { "type": "number" },
+        "starsEarned": { "type": "number" },
+        "xpEarned": { "type": "number" },
+        "userInputSummary": { "type": "string", "maxLength": 4096 },
+        "feedbackSummary": { "type": "string", "maxLength": 2048 },
+        "teacherRemarks": { "type": "string", "maxLength": 2048 },
+        "completedAt": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "maxLength": 64 },
+        "audioDuration": { "type": "string", "maxLength": 32 }
+      },
+      "required": ["id", "studentId", "skill", "taskTitle", "completedAt"]
+    },
+    "activityLog": {
+      "title": "ActivityLog",
+      "description": "Audit and activity log entries",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "actorRole": { "type": "string", "maxLength": 32 },
+        "actionType": { "type": "string", "maxLength": 64 },
+        "title": { "type": "string", "maxLength": 256 },
+        "details": { "type": "string", "maxLength": 2048 },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "actorRole", "actionType", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "Synchronized user login records for teachers and students across devices"
+    },
+    "/students/{studentId}": {
+      "schema": { "$ref": "#/entities/student" },
+      "description": "Student profiles, TP grades, badges, and learning progress synchronized across devices"
+    },
+    "/classes/{classId}": {
+      "schema": { "$ref": "#/entities/classGroup" },
+      "description": "School classes and year levels"
+    },
+    "/task_history/{taskId}": {
+      "schema": { "$ref": "#/entities/taskHistory" },
+      "description": "Student completed exercises and diagnostic records synced in real time"
+    },
+    "/activity_logs/{logId}": {
+      "schema": { "$ref": "#/entities/activityLog" },
+      "description": "System activity logs"
+    }
+  }
+}

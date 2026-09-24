@@ -1,0 +1,10 @@
+{
+  "name": "English AI SmartTrack",
+  "description": "An AI-assisted English PBD management and learning platform for Malaysian primary schools connecting assessment, digital evidence, student portfolio, practice, and intervention.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
